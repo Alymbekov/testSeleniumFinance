@@ -10,7 +10,7 @@ logger = get_task_logger(__name__)
 
 
 @task(name='selenium_run')
-def selenium_run(duration, download_url, title) -> str:
+def selenium_run(duration,  title) -> str:
     sleep(duration)
     parse_object = utils.Parser(
         driver=webdriver.Chrome(
@@ -19,7 +19,6 @@ def selenium_run(duration, download_url, title) -> str:
     )
     result = parse_object.get_max_data(
         url=f"https://finance.yahoo.com/quote/{title}/history?p={title}",
-        download_url=download_url,
         title=title)
     if result:
         write_to_csv.delay(duration=2, title=title)

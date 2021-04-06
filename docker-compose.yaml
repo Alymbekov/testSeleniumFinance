@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  web:
+    build: ./
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - redis
+
+  celery:
+    build: ./
+    command: celery -A configs worker --loglevel=info --logfile=logs/celery.log
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - web
+      - redis
+  redis:
+    image: redis:5-alpine
+    ports:
+      - 6379:6379
+#    healthcheck:
+#      test: redis-cli ping
+#      interval: 3s
+#      timeout: 5s
+#      retries: 5

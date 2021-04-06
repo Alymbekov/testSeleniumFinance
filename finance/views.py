@@ -22,10 +22,7 @@ class ParseDataView(APIView):
 
         if serializer.is_valid():
             title = serializer.validated_data.get('title')
-            #TODO add click functional
-            download_url = "https://query1.finance.yahoo.com/v7/finance/download/ZUO?period1=1523491200&period2=" \
-                           "1617235200&interval=1d&events=history&includeAdjustedClose=true"
-            selenium_run.delay(duration=2, download_url=download_url, title=title)
+            selenium_run.delay(duration=2, title=title)
             return Response(status=status.HTTP_200_OK, data={"message": "successfully parsed"})
         return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Query is not valid"})
 

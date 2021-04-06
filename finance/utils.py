@@ -1,3 +1,8 @@
+import time
+
+from selenium.webdriver.common.by import By
+
+
 class Parser:
     """
     Class for get data
@@ -15,12 +20,19 @@ class Parser:
         self.get_page(url=url)
         search_box = self.driver.find_element_by_name(name_of_class)
         search_box.send_keys(search_item)
-        # time.sleep(2)
+        time.sleep(2)
         search_box.submit()
 
-    def get_max_data(self, url, download_url, title="ZUO") -> dict:
+    def get_max_data(self, url, title="ZUO") -> dict:
         self.get_page_data(name_of_class="yfin-usr-qry", search_item=title)
         self.driver.get(url)
-        # time.sleep(2)
-        self.driver.get(download_url)
+        time.sleep(2)
+        result = self.driver.find_elements_by_xpath("//div[@data-test='dropdown']")
+        result[2].click()
+        time.sleep(2)
+        self.driver.find_element_by_xpath("//button[@data-value='MAX']").click()
+        time.sleep(2)
+        self.driver.find_element_by_xpath('//button//span[text()="Apply"]').click()
+        time.sleep(2)
+        self.driver.find_element_by_xpath("//a[@download]").click()
         return {"msg": "successfully done selenium parse"}
