@@ -10,6 +10,16 @@ services:
       - 8000:8000
     depends_on:
       - redis
+    links:
+      - selenium
+  selenium:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - "5900:5900"
+    privileged: true
+    shm_size: 2g
+    volumes:
+      - /home/dastan/Downloads:/home/seluser/Downloads
 
   celery:
     build: ./
@@ -19,6 +29,7 @@ services:
     depends_on:
       - web
       - redis
+      - selenium
   redis:
     image: redis:5-alpine
     ports:

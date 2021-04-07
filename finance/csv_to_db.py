@@ -4,9 +4,11 @@ from decouple import config
 
 from finance.models import CsvData
 
+path = config('DOCKER_PATH_TO_DOWNLOADS') if config('DOCKER', cast=bool) else config('PATH_TO_DOWNLOADS')
+
 
 def get_csv_file_write_to_db(name_of_file) -> None:
-    csv_file_path = config('PATH_TO_DOWNLOADS') + f'{name_of_file}.csv'
+    csv_file_path = path + f'{name_of_file}.csv'
     with open(csv_file_path, 'r') as csv_file:
         csv_file.readline()
         list_ = csv_file.readlines()

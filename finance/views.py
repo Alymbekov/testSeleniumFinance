@@ -1,3 +1,5 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -17,6 +19,12 @@ class ParseDataView(APIView):
     """Parse Data"""
     serializer_class = ParseDataSerializer
 
+    @swagger_auto_schema(request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'title': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        }
+    ))
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
 
