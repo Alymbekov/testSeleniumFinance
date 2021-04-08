@@ -79,6 +79,8 @@
    Here you can see that the Redis service is running and already activated, i.e. it is configured to start at server 
    boot.
    
+  And don't forget to create .env file and path variables like .env.example
+   
    
 3. Migrations to the database
 
@@ -111,6 +113,19 @@
    ```
     
     Fine! Project is ready to use.
+   
+####Quick Start Guide with Docker
+    After cloning the project, go to the project folder using the terminal and type the following command:
+    ```
+    docker-compose up --build or docker-compose up -d --build
+    ```
+    Fine! Project is ready to use.
+    if you have error like redis is already use,
+    you can stop redis-server 
+   ```
+   /etc/init.d/redis-server stop
+   ```
+   
+   Fine! Project is ready to use.
 
-      
 
